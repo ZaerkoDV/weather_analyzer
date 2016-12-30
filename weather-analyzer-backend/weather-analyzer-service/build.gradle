@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << '-Xlint:all'
+    }
+}
+
+dependencies {
+    compile project(':weather-analyzer-dao')
+	compile project(':weather-analyzer-screen-parser')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-velocity', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    compile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'commons-validator', name: 'commons-validator', version: '1.4.1'
+}

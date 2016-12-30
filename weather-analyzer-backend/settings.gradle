@@ -1,0 +1,3 @@
+include 'weather-analyzer-model', 'weather-analyzer-dao', 'weather-analyzer-service', 'weather-analyzer-controller', 'weather-analyzer-screen-parser'
+
+rootProject.name = 'weather-analyzer-backend'
