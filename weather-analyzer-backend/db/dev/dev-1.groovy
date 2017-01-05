@@ -1,137 +1,124 @@
 databaseChangeLog(logicalFilePath: 'dev-1') {
     changeSet id: '1', author: 'author', {
-        insert tableName: 'user', {
+        insert tableName: 'weather_web_site', {
             column name: 'id', value: 1
-            column name: 'first_name', value: 'Ivan'
-			column name: 'last_name', value: 'Ivanov'
-			column name: 'middle_name', value: 'Ivanovich'
-			column name: 'birth', value: 1468330053
-			column name: 'status', value: 'active'
+            column name: 'name', value: 'gismeteo.by'
+            column name: 'full_url', value: 'https://www.gismeteo.by/weather-grodno-4243/weekly/'
+            column name: 'last_success_connected', value: 1468330053
+            column name: 'reating_position', value: 1
         }
-		
-		insert tableName: 'user', {
+
+        insert tableName: 'weather_web_site', {
             column name: 'id', value: 2
-            column name: 'first_name', value: 'Denis'
-			column name: 'last_name', value: 'Petrovich'
-			column name: 'middle_name', value: 'Maksimov'
-			column name: 'birth', value: 1468330065
-			column name: 'status', value: 'active'
+            column name: 'name', value: 'tut.by'
+            column name: 'full_url', value: 'http://pogoda.tut.by/'
+            column name: 'last_success_connected', value: 1468330053
+            column name: 'reating_position', value: 2
+        }
+
+        insert tableName: 'weather_web_site', {
+            column name: 'id', value: 3
+            column name: 'name', value: 'pogoda.blr.cc'
+            column name: 'full_url', value: 'http://pogoda.blr.cc/belarus/soligorsk/7-dney/'
+            column name: 'last_success_connected', value: 1468330053
+            column name: 'reating_position', value: 3
         }
 
         rollback {
-            delete tableName: 'user', where: 'id in (1,2)'
+            delete tableName: 'weather_web_site', where: 'id in (1,2,3)'
         }
     }
-	
-	changeSet id: '2', author: 'author', {
-        insert tableName: 'user_corespondence', {
-		    column name: 'id', value: 1
-            column name: 'email', value: 'ivanov@gmail.com'
-            column name: 'skype', value: 'ivanov.ivan'
-			column name: 'phone', value: '123456789'
-			column name: 'ip_address', value: '143.22.123.23'
-			column name: 'user_id', value: 1
-        }
-		
-		insert tableName: 'user_corespondence', {
-		    column name: 'id', value: 2
-            column name: 'email', value: 'petrovich@gmail.com'
-            column name: 'skype', value: 'petrovch.denis'
-			column name: 'phone', value: '987654321'
-			column name: 'ip_address', value: '12.32.3.76'
-			column name: 'user_id', value: 2
-        }
 
-        rollback {
-            delete tableName: 'user_corespondence', where: 'id in (1,2)'
-        }
-    }
-	
-	changeSet id: '3', author: 'author', {
-        insert tableName: 'user_photo', {
-		    column name: 'id', value: 1
+    changeSet id: '2', author: 'author', {
+        insert tableName: 'weather_data', {
+            column name: 'id', value: 1
             column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'photo_data', value:''
-			column name: 'user_id', value: 1
+            column name: 'web_site_forecast_temperature', value: 1
+            column name: 'web_site_real_temperature', value: 2
+            column name: 'error_temperature', value: 1
+            column name: 'error_sign', value: 0
+            column name: 'weather_web_site_id', value: 1
         }
-		
-		insert tableName: 'user_photo', {
-		    column name: 'id', value: 2
+
+        insert tableName: 'weather_data', {
+            column name: 'id', value: 2
             column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'photo_data', value:''
-			column name: 'user_id', value: 2
+            column name: 'web_site_forecast_temperature', value: 2
+            column name: 'web_site_real_temperature', value: 0
+            column name: 'error_temperature', value: 2
+            column name: 'error_sign', value: 0
+            column name: 'weather_web_site_id', value: 2
+        }
+
+        insert tableName: 'weather_data', {
+            column name: 'id', value: 3
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'web_site_forecast_temperature', value: -1
+            column name: 'web_site_real_temperature', value: 2
+            column name: 'error_temperature', value: 3
+            column name: 'error_sign', value: -1
+            column name: 'weather_web_site_id', value: 3
         }
 
         rollback {
-            delete tableName: 'user_photo', where: 'id in (1,2)'
+            delete tableName: 'weather_data', where: 'id in (1,2,3)'
         }
     }
-	
-	changeSet id: '4', author: 'author', {
-        insert tableName: 'user_security', {
-		    column name: 'id', value: 1
-            column name: 'login', value: 'ivanov'
-            column name: 'password', value: 'ivanov'
-			column name: 'role', value: 'admin'
-			column name: 'token', value: 'dfagshagdjbhgfdyvbfybvyvyvynhnfdnlvlfndjnfvdjlnvl'
-			column name: 'user_id', value: 1
+
+    changeSet id: '3', author: 'author', {
+        insert tableName: 'data_screen', {
+            column name: 'id', value: 1
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'screen_data', value:'rmfjvjfjfnjjnjfnvjfnjfjvnfjnv'
+            column name: 'weather_data_id', value: 1
         }
-		
-		insert tableName: 'user_security', {
-		    column name: 'id', value: 2
-            column name: 'login', value: 'petrov'
-            column name: 'password', value: 'petrov'
-			column name: 'role', value: 'client'
-			column name: 'token', value: 'werreriurihunchmehcobgubvnlvgbgbmugnbgnbugnnbgunbu'
-			column name: 'user_id', value: 2
+
+        insert tableName: 'data_screen', {
+            column name: 'id', value: 2
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'screen_data', value:'jnfdjnjcnjdncjdncjdncjdncjncjdn'
+            column name: 'weather_data_id', value: 2
+        }
+
+        insert tableName: 'data_screen', {
+            column name: 'id', value: 3
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'screen_data', value:'kvnkdkcndjcnjncjdncjdncncndlsdk'
+            column name: 'weather_data_id', value: 3
         }
 
         rollback {
-            delete tableName: 'user_security', where: 'id in (1,2)'
+            delete tableName: 'data_screen', where: 'id in (1,2,3)'
         }
     }
-	
-	changeSet id: '5', author: 'author', {
-        insert tableName: 'link', {
-		    column name: 'id', value: 1
-            column name: 'tag', value: 'google'
-            column name: 'comment', value: 'Google search engine'
-			column name: 'short_url', value: 'https://www.gogl.com/'
-			column name: 'full_url', value: 'https://www.google.com/'
-			column name: 'user_id', value: 1
+    
+    changeSet id: '4', author: 'author', {
+        insert tableName: 'weather_forecast', {
+            column name: 'id', value: 1
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'forecast_temperature', value: 1
+            column name: 'real_temperature', value: 2
+            column name: 'weather_web_site_id', value: 1
         }
-		
-		insert tableName: 'link', {
-		    column name: 'id', value: 2
-            column name: 'tag', value: 'bring'
-            column name: 'comment', value: 'Bring search engine'
-			column name: 'short_url', value: 'http://www.brg.com/'
-			column name: 'full_url', value: 'http://www.bing.com/'
-			column name: 'user_id', value: 2
+
+        insert tableName: 'weather_forecast', {
+            column name: 'id', value: 2
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'forecast_temperature', value: 3
+            column name: 'real_temperature', value: 2
+            column name: 'weather_web_site_id', value: 2
+        }
+
+        insert tableName: 'weather_forecast', {
+            column name: 'id', value: 3
+            column name: 'created_at_timestamp', value: 1288323623006
+            column name: 'forecast_temperature', value: -1
+            column name: 'real_temperature', value: 2
+            column name: 'weather_web_site_id', value: 3
         }
 
         rollback {
-            delete tableName: 'link', where: 'id in (1,2)'
-        }
-    }
-	
-	changeSet id: '6', author: 'author', {
-        insert tableName: 'link_history', {
-		    column name: 'id', value: 1
-            column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'sum_click', value: 1
-			column name: 'link_id', value: 1
-        }
-		
-		insert tableName: 'link_history', {
-		    column name: 'id', value: 2
-            column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'sum_click', value: 100
-			column name: 'link_id', value: 2
-        }
-
-        rollback {
-            delete tableName: 'link', where: 'id in (1,2)'
+            delete tableName: 'user_security', where: 'id in (1,2,3)'
         }
     }
 }

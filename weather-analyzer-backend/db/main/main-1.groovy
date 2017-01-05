@@ -1,124 +1,124 @@
 databaseChangeLog(logicalFilePath: 'main-1') {
     changeSet id: '1', author: 'author', {
-        createTable tableName: 'user', {
+        createTable tableName: 'weather_web_site', {
             column name: 'id', type: 'bigint', autoIncrement: true, {
                 constraints primaryKey: true, nullable: false
             }
 
-            column name: 'first_name', type: 'varchar(255)', {
+            column name: 'name', type: 'varchar(255)', {
                 constraints nullable: false
             }
 
-            column name: 'last_name', type: 'varchar(1024)', {
+            column name: 'full_url', type: 'varchar(1024)', {
                 constraints nullable: false
             }
 
-            column name: 'middle_name', type: 'varchar(255)', {
-                constraints nullable: true
-            }
-
-            column name: 'birth', type: 'bigint', {
+            column name: 'last_success_connected', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'status', type: 'varchar(64)', {
+            column name: 'reating_position', type: 'bigint', {
                 constraints nullable: false
             }
         }
 
-        createIndex tableName: 'user', indexName: 'idx__user__first_name', {
-            column name: 'first_name'
+        createIndex tableName: 'weather_web_site', indexName: 'idx__weather_web_site__name', {
+            column name: 'name'
         }
 
-        createIndex tableName: 'user', indexName: 'idx__user__last_name', {
-            column name: 'last_name'
+        createIndex tableName: 'weather_web_site', indexName: 'idx__weather_web_site__full_url', {
+            column name: 'full_url'
         }
 
-        createIndex tableName: 'user', indexName: 'idx__user__middle_name', {
-            column name: 'middle_name'
+        createIndex tableName: 'weather_web_site', indexName: 'idx__weather_web_site__last_success_connected', {
+            column name: 'last_success_connected'
         }
 
-        createIndex tableName: 'user', indexName: 'idx__user__birth', {
-            column name: 'birth'
-        }
-
-        createIndex tableName: 'user', indexName: 'idx__user__status', {
-            column name: 'status'
+        createIndex tableName: 'weather_web_site', indexName: 'idx__weather_web_site__reating_position', {
+            column name: 'reating_position'
         }
 
         rollback {
-            dropTable tableName: 'user'
+            dropTable tableName: 'weather_web_site'
         }
     }
 
     changeSet id: '2', author: 'author', {
-        createTable tableName: 'user_corespondence', {
+        createTable tableName: 'weather_data', {
             column name: 'id', type: 'bigint', autoIncrement: true, {
                 constraints primaryKey: true, nullable: false
             }
 
-            column name: 'email', type: 'varchar(255)', {
+            column name: 'created_at_timestamp', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'skype', type: 'varchar(1024)', {
+            column name: 'web_site_forecast_temperature', type: 'bigint', {
+                constraints nullable: false
+            }
+			
+			column name: 'web_site_real_temperature', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'phone', type: 'varchar(255)', {
+            column name: 'error_temperature', type: 'bigint', {
                 constraints nullable: true
             }
 
-            column name: 'ip_address', type: 'varchar(255)', {
+            column name: 'error_sign', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'user_id', type: 'bigint', {
+            column name: 'weather_web_site_id', type: 'bigint', {
                 constraints nullable: false
             }
         }
 
-        createIndex tableName: 'user_corespondence', indexName: 'idx__user_corespondence__email', {
-            column name: 'email'
+        createIndex tableName: 'weather_data', indexName: 'idx__weather_data__created_at_timestamp', {
+            column name: 'created_at_timestamp'
         }
 
-        createIndex tableName: 'user_corespondence', indexName: 'idx__user_corespondence__skype', {
-            column name: 'skype'
+        createIndex tableName: 'weather_data', indexName: 'idx__weather_data__web_site_forecast_temperature', {
+            column name: 'web_site_forecast_temperature'
+        }
+		
+		createIndex tableName: 'weather_data', indexName: 'idx__weather_data__web_site_real_temperature', {
+            column name: 'web_site_real_temperature'
         }
 
-        createIndex tableName: 'user_corespondence', indexName: 'idx__user_corespondence__phone', {
-            column name: 'phone'
+        createIndex tableName: 'weather_data', indexName: 'idx__weather_data__error_temperature', {
+            column name: 'error_temperature'
         }
 
-        createIndex tableName: 'user_corespondence', indexName: 'idx__user_corespondence__ip_address', {
-            column name: 'ip_address'
+        createIndex tableName: 'weather_data', indexName: 'idx__weather_data__error_sign', {
+            column name: 'error_sign'
         }
 
-        createIndex tableName: 'user_corespondence', indexName: 'idx__user_corespondence__user_id', {
-            column name: 'user_id'
+        createIndex tableName: 'weather_data', indexName: 'idx__weather_data__weather_web_site_id', {
+            column name: 'weather_web_site_id'
         }
 
         rollback {
-            dropTable tableName: 'user_corespondence'
+            dropTable tableName: 'weather_data'
         }
     }
 
     changeSet(id: '3', author: 'author') {
         addForeignKeyConstraint(
-            baseColumnNames: 'user_id',
-            baseTableName: 'user_corespondence',
-            constraintName: 'user_fk_in_user_corespondence',
+            baseColumnNames: 'weather_web_site_id',
+            baseTableName: 'weather_data',
+            constraintName: 'weather_web_site_fk_in_weather_data',
             deferrable: 'false',
             initiallyDeferred: 'false',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
             referencedColumnNames: 'id',
-            referencedTableName: 'user'
+            referencedTableName: 'weather_web_site'
         )
     }
 
     changeSet id: '4', author: 'author', {
-        createTable tableName: 'user_photo', {
+        createTable tableName: 'data_screen', {
             column name: 'id', type: 'bigint', autoIncrement: true, {
                 constraints primaryKey: true, nullable: false
             }
@@ -127,180 +127,48 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints nullable: false
             }
 
-            column name: 'photo_data', type: 'longblob', {
+            column name: 'screen_data', type: 'longblob', {
                 constraints nullable: true
             }
 
-            column name: 'user_id', type: 'bigint', {
+            column name: 'weather_data_id', type: 'bigint', {
                 constraints nullable: false
             }
         }
 
-        createIndex tableName: 'user_photo', indexName: 'idx__user_photo__created_at_timestamp', {
+        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__created_at_timestamp', {
             column name: 'created_at_timestamp'
         }
 
-        createIndex tableName: 'user_photo', indexName: 'idx__user_photo__photo_data', {
-            column name: 'photo_data'
+        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__screen_data', {
+            column name: 'screen_data'
         }
 
-        createIndex tableName: 'user_photo', indexName: 'idx__user_photo__user_id', {
-            column name: 'user_id'
+        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__weather_data_id', {
+            column name: 'weather_data_id'
         }
 
         rollback {
-            dropTable tableName: 'user_photo'
+            dropTable tableName: 'screen_data'
         }
     }
 
     changeSet(id: '5', author: 'author') {
         addForeignKeyConstraint(
-            baseColumnNames: 'user_id',
-            baseTableName: 'user_photo',
-            constraintName: 'user_fk_in_user_photo',
+            baseColumnNames: 'weather_data_id',
+            baseTableName: 'data_screen',
+            constraintName: 'weather_data_fk_in_data_screen',
             deferrable: 'false',
             initiallyDeferred: 'false',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
             referencedColumnNames: 'id',
-            referencedTableName: 'user'	
+            referencedTableName: 'weather_data'	
         )
     }
 
     changeSet id: '6', author: 'author', {
-        createTable tableName: 'user_security', {
-            column name: 'id', type: 'bigint', autoIncrement: true, {
-                constraints primaryKey: true, nullable: false
-            }
-
-            column name: 'login', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'password', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'role', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'token', type: 'varchar(255)', {
-                constraints nullable: true
-            }
-
-            column name: 'user_id', type: 'bigint', {
-                constraints nullable: true
-            }
-        }
-
-        createIndex tableName: 'user_security', indexName: 'idx__user_security__login', {
-            column name: 'login'
-        }
-
-        createIndex tableName: 'user_security', indexName: 'idx__user_security__password', {
-            column name: 'password'
-        }
-
-        createIndex tableName: 'user_security', indexName: 'idx__user_security__role', {
-            column name: 'role'
-        }
-
-        createIndex tableName: 'user_security', indexName: 'idx__user_security__tokin', {
-            column name: 'token'
-        }
-
-        createIndex tableName: 'user_security', indexName: 'idx__user_security__user_id', {
-            column name: 'user_id'
-        }
-
-        rollback {
-            dropTable tableName: 'user_security'
-        }
-    }
-
-    changeSet(id:'7', author: 'author') {
-        addForeignKeyConstraint(
-            baseColumnNames: 'user_id',
-            baseTableName: 'user_security',
-            constraintName: 'user_fk_in_user_security',
-            deferrable: 'false',
-            initiallyDeferred: 'false',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            referencedColumnNames: 'id',
-            referencedTableName: 'user'
-        )
-    }
-
-    changeSet id: '8', author: 'author', {
-        createTable tableName: 'link', {
-            column name: 'id', type: 'bigint', autoIncrement: true, {
-                constraints primaryKey: true, nullable: false
-            }
-
-            column name: 'tag', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'comment', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'short_url', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'full_url', type: 'varchar(255)', {
-                constraints nullable: false
-            }
-
-            column name: 'user_id', type: 'bigint', {
-                constraints nullable: true
-            }
-        }
-
-        createIndex tableName: 'link', indexName: 'idx__link__tag', {
-            column name: 'tag'
-        }
-
-        createIndex tableName: 'link', indexName: 'idx__link__comment', {
-            column name: 'comment'
-        }
-
-        createIndex tableName: 'link', indexName: 'idx__link__short_url', {
-            column name: 'short_url'
-        }
-
-        createIndex tableName: 'link', indexName: 'idx__link__full_url', {
-            column name: 'full_url'
-        }
-
-        createIndex tableName: 'link', indexName: 'idx__link__user_id', {
-            column name: 'user_id'
-        }
-
-        rollback {
-            dropTable tableName: 'link'
-        }
-    }
-
-    changeSet(id: '9', author: 'author') {
-        addForeignKeyConstraint(
-            baseColumnNames: 'user_id',
-            baseTableName: 'link',
-            constraintName: 'user_fk_in_link',
-            deferrable: 'false',
-            initiallyDeferred: 'false',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            referencedColumnNames: 'id',
-            referencedTableName: 'user'
-        )
-    }
-
-    changeSet id: '10', author: 'author', {
-        createTable tableName: 'link_history', {
+        createTable tableName: 'weather_forecast', {
             column name: 'id', type: 'bigint', autoIncrement: true, {
                 constraints primaryKey: true, nullable: false
             }
@@ -309,43 +177,51 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints nullable: false
             }
 
-            column name: 'sum_click', type: 'bigint', {
+            column name: 'forecast_temperature', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'link_id', type: 'bigint', {
+            column name: 'real_temperature', type: 'bigint', {
+                constraints nullable: false
+            }
+
+            column name: 'weather_web_site_id', type: 'bigint', {
                 constraints nullable: true
             }
         }
 
-        createIndex tableName: 'link_history', indexName: 'idx__link_history__created_at_timestamp', {
+        createIndex tableName: 'weather_forecast', indexName: 'idx__weather_forecast__created_at_timestamp', {
             column name: 'created_at_timestamp'
         }
 
-        createIndex tableName: 'link_history', indexName: 'idx__link_history__sum_click', {
-            column name: 'sum_click'
+        createIndex tableName: 'weather_forecast', indexName: 'idx__weather_forecast__forecast_temperature', {
+            column name: 'forecast_temperature'
         }
 
-        createIndex tableName: 'link_history', indexName: 'idx__link_history__link_id', {
-            column name: 'link_id'
+        createIndex tableName: 'weather_forecast', indexName: 'idx__weather_forecast__real_temperature', {
+            column name: 'real_temperature'
+        }
+
+        createIndex tableName: 'weather_forecast', indexName: 'idx__weather_forecast__weather_web_site_id', {
+            column name: 'weather_web_site_id'
         }
 
         rollback {
-            dropTable tableName: 'link'
+            dropTable tableName: 'weather_forecast'
         }
     }
 
-    changeSet(id: '11', author: 'author') {
+    changeSet(id:'7', author: 'author') {
         addForeignKeyConstraint(
-            baseColumnNames: 'link_id',
-            baseTableName: 'link_history',
-            constraintName: 'link_fk_in_link_history',
+            baseColumnNames: 'weather_web_site_id',
+            baseTableName: 'weather_forecast',
+            constraintName: 'weather_web_site_fk_in_weather_forecast',
             deferrable: 'false',
             initiallyDeferred: 'false',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
             referencedColumnNames: 'id',
-            referencedTableName: 'link'	
+            referencedTableName: 'weather_web_site'
         )
     }
 }

@@ -20,7 +20,7 @@ public class WeatherWebSite extends BaseEntity<Long> {
     private String name;
 
     @Column
-    private String note;
+    private String fullUrl;
 
     @Column
     private Long lastSuccessConnected;
@@ -47,12 +47,12 @@ public class WeatherWebSite extends BaseEntity<Long> {
         return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getFullUrl() {
+        return fullUrl;
     }
 
-    public WeatherWebSite setNote(String note) {
-        this.note = note;
+    public WeatherWebSite setFullUrl(String fullUrl) {
+        this.fullUrl = fullUrl;
         return this;
     }
 
