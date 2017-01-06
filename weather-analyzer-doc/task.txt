@@ -22,11 +22,18 @@
   -на основе пред стат данных(мат аппараты)
 
   
-  
-https://geektimes.ru/post/112958/
-http://jonny-redmann.livejournal.com/1199.html
-http://meteocenter.net/_world_weather_stations.htm
-
 если через api
 http://openweathermap.org/
 https://developer.yahoo.com/weather/
+
+Контроллеры
+
+- WeatherWebSiteController
+	/screenParsing/start
+		Скрин экрана
+		Парсинг скрина
+		Проверка качества парсинга скрина
+		Запись в бд значений
+		Вычисление текущей и откланений
+
+    /weatherWeekForescast/get
