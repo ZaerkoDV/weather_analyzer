@@ -14,7 +14,6 @@ buildscript {
         classpath files('liquibase-lib/liquibase-3.4.2.jar')
         classpath files('liquibase-lib/liquibase-groovy-dsl-1.2.1.jar')
         classpath files('liquibase-lib/liquibase-gradle-plugin-1.2.1.jar')
-        classpath group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
         classpath group: 'org.akhikhl.gretty', name: 'gretty', version: grettyVersion
     }
 }
