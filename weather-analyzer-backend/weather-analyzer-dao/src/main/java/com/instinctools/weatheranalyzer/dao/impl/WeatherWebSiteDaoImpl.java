@@ -6,9 +6,13 @@ import com.instinctools.weatheranalyzer.model.WeatherWebSite;
 
 @Repository
 public class WeatherWebSiteDaoImpl extends BaseDaoImpl<WeatherWebSite, Long> implements WeatherWebSiteDao {
-
     public WeatherWebSiteDaoImpl() {
         super(WeatherWebSite.class);
+    }
+
+    @Override
+    public WeatherWebSite getWeatherWebSiteByName(String webSiteName) {
+        return null;
     }
 
 //    @Override
