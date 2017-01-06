@@ -1,5 +1,7 @@
 package com.instinctools.weatheranalyzer.dao;
 
-public interface DataScreenDao {
+import com.instinctools.weatheranalyzer.model.DataScreen;
+
+public interface DataScreenDao extends BaseDao<DataScreen, Long> {
 
 }

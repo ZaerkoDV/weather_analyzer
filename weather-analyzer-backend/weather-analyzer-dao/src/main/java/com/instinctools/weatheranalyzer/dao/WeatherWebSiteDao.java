@@ -1,5 +1,7 @@
 package com.instinctools.weatheranalyzer.dao;
 
-public interface WeatherWebSiteDao {
+import com.instinctools.weatheranalyzer.model.WeatherWebSite;
+
+public interface WeatherWebSiteDao extends BaseDao<WeatherWebSite, Long> {
 
 }

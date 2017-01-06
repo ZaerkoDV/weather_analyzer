@@ -2,10 +2,11 @@ package com.instinctools.weatheranalyzer.service.impl;
 
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import com.instinctools.weatheranalyzer.service.WeatherForecastService;
+import com.instinctools.weatheranalyzer.service.WeatherDataService;
 import com.instinctools.weatheranalyzer.service.base.BaseService;
 
 @Service
 @Transactional
-public class WeatherForecastServiceImpl extends BaseService implements WeatherForecastService {
+public class WeatherDataServiceImpl extends BaseService implements WeatherDataService {
+
 }
