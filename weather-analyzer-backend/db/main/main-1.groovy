@@ -118,56 +118,6 @@ databaseChangeLog(logicalFilePath: 'main-1') {
     }
 
     changeSet id: '4', author: 'author', {
-        createTable tableName: 'data_screen', {
-            column name: 'id', type: 'bigint', autoIncrement: true, {
-                constraints primaryKey: true, nullable: false
-            }
-
-            column name: 'created_at_timestamp', type: 'bigint', {
-                constraints nullable: false
-            }
-
-            column name: 'screen_data', type: 'longblob', {
-                constraints nullable: true
-            }
-
-            column name: 'weather_data_id', type: 'bigint', {
-                constraints nullable: false
-            }
-        }
-
-        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__created_at_timestamp', {
-            column name: 'created_at_timestamp'
-        }
-
-        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__screen_data', {
-            column name: 'screen_data'
-        }
-
-        createIndex tableName: 'data_screen', indexName: 'idx__data_screen__weather_data_id', {
-            column name: 'weather_data_id'
-        }
-
-        rollback {
-            dropTable tableName: 'screen_data'
-        }
-    }
-
-    changeSet(id: '5', author: 'author') {
-        addForeignKeyConstraint(
-            baseColumnNames: 'weather_data_id',
-            baseTableName: 'data_screen',
-            constraintName: 'weather_data_fk_in_data_screen',
-            deferrable: 'false',
-            initiallyDeferred: 'false',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            referencedColumnNames: 'id',
-            referencedTableName: 'weather_data'	
-        )
-    }
-
-    changeSet id: '6', author: 'author', {
         createTable tableName: 'weather_forecast', {
             column name: 'id', type: 'bigint', autoIncrement: true, {
                 constraints primaryKey: true, nullable: false
@@ -211,7 +161,7 @@ databaseChangeLog(logicalFilePath: 'main-1') {
         }
     }
 
-    changeSet(id:'7', author: 'author') {
+    changeSet(id:'5', author: 'author') {
         addForeignKeyConstraint(
             baseColumnNames: 'weather_web_site_id',
             baseTableName: 'weather_forecast',

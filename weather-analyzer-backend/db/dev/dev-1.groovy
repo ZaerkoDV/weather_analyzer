@@ -64,35 +64,8 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
             delete tableName: 'weather_data', where: 'id in (1,2,3)'
         }
     }
-
-    changeSet id: '3', author: 'author', {
-        insert tableName: 'data_screen', {
-            column name: 'id', value: 1
-            column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'screen_data', value:'rmfjvjfjfnjjnjfnvjfnjfjvnfjnv'
-            column name: 'weather_data_id', value: 1
-        }
-
-        insert tableName: 'data_screen', {
-            column name: 'id', value: 2
-            column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'screen_data', value:'jnfdjnjcnjdncjdncjdncjdncjncjdn'
-            column name: 'weather_data_id', value: 2
-        }
-
-        insert tableName: 'data_screen', {
-            column name: 'id', value: 3
-            column name: 'created_at_timestamp', value: 1288323623006
-            column name: 'screen_data', value:'kvnkdkcndjcnjncjdncjdncncndlsdk'
-            column name: 'weather_data_id', value: 3
-        }
-
-        rollback {
-            delete tableName: 'data_screen', where: 'id in (1,2,3)'
-        }
-    }
     
-    changeSet id: '4', author: 'author', {
+    changeSet id: '3', author: 'author', {
         insert tableName: 'weather_forecast', {
             column name: 'id', value: 1
             column name: 'created_at_timestamp', value: 1288323623006

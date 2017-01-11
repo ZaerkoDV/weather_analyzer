@@ -26,7 +26,7 @@ allprojects {
 
 dependencies {
     compile project(':weather-analyzer-dao')
-	compile project(':weather-analyzer-screen-parser')
+    compile project(':weather-analyzer-screen-parser')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-velocity', version: springBootVersion

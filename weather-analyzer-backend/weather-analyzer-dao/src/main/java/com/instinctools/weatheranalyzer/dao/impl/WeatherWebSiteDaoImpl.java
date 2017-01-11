@@ -1,5 +1,7 @@
 package com.instinctools.weatheranalyzer.dao.impl;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import com.instinctools.weatheranalyzer.dao.WeatherWebSiteDao;
 import com.instinctools.weatheranalyzer.model.WeatherWebSite;
@@ -12,7 +14,11 @@ public class WeatherWebSiteDaoImpl extends BaseDaoImpl<WeatherWebSite, Long> imp
 
     @Override
     public WeatherWebSite getWeatherWebSiteByName(String webSiteName) {
-        return null;
+        Criteria criteria = createCriteria()
+        .add(Restrictions.eq("name", webSiteName))
+        .setMaxResults(1);
+
+        return (WeatherWebSite) criteria.uniqueResult();
     }
 
 //    @Override
