@@ -30,6 +30,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-velocity', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: springBootVersion
+    compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+    compile 'org.jsoup:jsoup:1.8.3'
 }
 
 processResources {

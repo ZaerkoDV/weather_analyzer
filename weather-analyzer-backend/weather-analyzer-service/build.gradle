@@ -33,5 +33,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
     compile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'com.maxmind.geoip', name: 'geoip-api', version: '1.2.14'
     compile group: 'commons-validator', name: 'commons-validator', version: '1.4.1'
 }
