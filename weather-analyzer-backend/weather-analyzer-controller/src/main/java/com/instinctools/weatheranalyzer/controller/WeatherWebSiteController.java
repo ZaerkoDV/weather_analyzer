@@ -12,6 +12,7 @@ import com.instinctools.weatheranalyzer.model.WeatherData;
 import com.instinctools.weatheranalyzer.model.WeatherWebSite;
 import com.instinctools.weatheranalyzer.service.WeatherDataService;
 import com.instinctools.weatheranalyzer.service.WeatherWebSiteServiñe;
+
 @Controller//WeatherWebSite
 @RequestMapping(value="backend/weather")
 public class WeatherWebSiteController extends BaseController {
@@ -27,15 +28,12 @@ public class WeatherWebSiteController extends BaseController {
     public ResponseEntity<?> actionPostScreenParsingStart(@RequestParam("site") String site) {
         WeatherWebSite weatherWebSite = weatherWebSiteServiñe.getByName(site);
 
-        WeatherData weatherData = weatherDataService.createWeatherData(
-            new WeatherData()
-                .setCreatedAtTimestamp(getCurrentTimestamp())
-                .setWeatherWebSite(weatherWebSite)
-        );
-
-        return buildOk(toMap(
-            "id", weatherData.getId(),
-            "site", weatherData.getWeatherWebSite().getName()
+        return buildValidationResult(weatherDataService.createWeatherData(new WeatherData()
+            .setCreatedAtTimestamp(getCurrentTimestamp())
+            .setWeatherWebSite(weatherWebSite)
+        ), weatherDataTemp -> toMap(
+            "id", weatherDataTemp.getId(),
+            "site", weatherDataTemp.getWeatherWebSite().getName()
         ));
     }
 

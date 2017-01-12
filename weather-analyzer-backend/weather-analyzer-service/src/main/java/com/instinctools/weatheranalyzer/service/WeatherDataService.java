@@ -1,7 +1,8 @@
 package com.instinctools.weatheranalyzer.service;
 
 import com.instinctools.weatheranalyzer.model.WeatherData;
+import com.instinctools.weatheranalyzer.service.support.ValidationResult;
 
 public interface WeatherDataService {
-    public WeatherData createWeatherData(WeatherData weatherData);
+    public ValidationResult<WeatherData> createWeatherData(WeatherData weatherData);
 }
