@@ -64,12 +64,28 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
        return result.setResult(Boolean.FALSE);
     }
 
+    //middleDayTemprageForWeek.get(0) = today
     public Boolean startGismeteoParsing(WeatherData inputWeatherData) {
         List<Long> middleDayTemprageForWeek = gismeteoParser.startParsing(MAP_WEB_SITE_ADDRESES.get(
             inputWeatherData.getWeatherWebSite().getName()
         ));
 
-        for (int i=0; i < middleDayTemprageForWeek.size(); i++) {
+        //save real temperature on next current day
+        WeatherData prevoriusWeatherData =  weatherDataDao.findForecastTempratureOnDay(inputWeatherData);//1484309568324
+
+        prevoriusWeatherData.setWebSiteRealTemperature(
+            middleDayTemprageForWeek.get(0)
+        ).setErrorTemperature(countDistance(
+            prevoriusWeatherData.getWebSiteForecastTemperature(),
+            middleDayTemprageForWeek.get(0)
+        )).setErrorSign(countErrorSing(
+            prevoriusWeatherData.getWebSiteForecastTemperature(),
+            middleDayTemprageForWeek.get(0)
+        ));
+        weatherDataDao.save(prevoriusWeatherData);
+
+        // save forecast temperature on next 6 day
+        for (int i=1; i < middleDayTemprageForWeek.size(); i++) {
             weatherDataDao.save(new WeatherData()
                 .setCreatedAtTimestamp(inputWeatherData.getCreatedAtTimestamp() + (i*(long)86400000))
                 .setWebSiteForecastTemperature(middleDayTemprageForWeek.get(i))
@@ -89,8 +105,25 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
         return Boolean.TRUE;
     }
 
+
+    public Long countDistance(Long forecastTempratureCourrentDay, Long realTempratureCurrentDay) {
+       return Math.abs(Math.abs(forecastTempratureCourrentDay)-Math.abs(realTempratureCurrentDay));
+    }
+
+    public Long countErrorSing(Long forecastTempratureCourrentDay, Long realTempratureCurrentDay) {
+        if (realTempratureCurrentDay > forecastTempratureCourrentDay){
+            return -1L;
+        } else if (realTempratureCurrentDay < forecastTempratureCourrentDay) {
+            return 1L;
+        } else {
+            return 0L;
+        }
+    }
+
     public <T> ValidationResult<T> validate(WeatherData inputWeatherData, ValidationResult<T> result) {
-        Boolean webAddressExist = MAP_WEB_SITE_ADDRESES.containsKey(inputWeatherData.getWeatherWebSite().getName());
+        Boolean webAddressExist = MAP_WEB_SITE_ADDRESES.containsKey(
+            inputWeatherData.getWeatherWebSite().getName()
+        );
 
         if (!webAddressExist) {
             result.addError(ERROR_WEB_ADDRESS);

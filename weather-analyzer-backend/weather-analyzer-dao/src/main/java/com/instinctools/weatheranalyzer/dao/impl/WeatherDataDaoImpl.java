@@ -9,4 +9,9 @@ public class WeatherDataDaoImpl extends BaseDaoImpl<WeatherData, Long> implement
     public WeatherDataDaoImpl() {
         super(WeatherData.class);
     }
+
+    @Override
+    public WeatherData findForecastTempratureOnDay(WeatherData weatherData) {
+      return null;
+    }
 }

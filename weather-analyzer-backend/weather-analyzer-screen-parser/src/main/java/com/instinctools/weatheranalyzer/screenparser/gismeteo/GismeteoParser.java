@@ -23,11 +23,10 @@ public class GismeteoParser {
 
         Elements elements = doc.select("div.weather_item.js_temp_graph");
 
-        for(Element element : elements) {
+        for (Element element : elements) {
             long d = minusCorrector(element.select("div.value.maxt.js_meas_container").text());
             long n = minusCorrector(element.select("div.value.mint.js_meas_container").text());
 
-            System.out.println(d+ " "+ n);
             middleDayTemprageForWeek.add((d+n)/2);
         }
 
@@ -38,7 +37,7 @@ public class GismeteoParser {
     public long minusCorrector(String inputValue) {
         if (inputValue.charAt(0) == 8722) {
             return -1 * Long.parseLong(inputValue.substring(1, inputValue.length()));
-        } else if(inputValue.charAt(0) == 43) {
+        } else if (inputValue.charAt(0) == 43) {
             return Long.parseLong(inputValue);
         } else {
             return 0;
