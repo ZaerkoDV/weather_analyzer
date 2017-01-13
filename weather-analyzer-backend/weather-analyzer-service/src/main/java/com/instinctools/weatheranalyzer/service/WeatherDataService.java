@@ -4,5 +4,5 @@ import com.instinctools.weatheranalyzer.model.WeatherData;
 import com.instinctools.weatheranalyzer.service.support.ValidationResult;
 
 public interface WeatherDataService {
-    public ValidationResult<WeatherData> createWeatherData(WeatherData weatherData);
+    public ValidationResult<Boolean> createWeatherData(WeatherData weatherData);
 }

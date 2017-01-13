@@ -20,26 +20,28 @@ public class GismeteoParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Elements links = doc.getElementsByTag("data-airmax=");
+
         Elements elements = doc.select("div.weather_item.js_temp_graph");
 
         for(Element element : elements) {
             long d = minusCorrector(element.select("div.value.maxt.js_meas_container").text());
             long n = minusCorrector(element.select("div.value.mint.js_meas_container").text());
+
+            System.out.println(d+ " "+ n);
             middleDayTemprageForWeek.add((d+n)/2);
         }
 
         return middleDayTemprageForWeek;
     }
 
+    //8722 - minus  43- plus
     public long minusCorrector(String inputValue) {
-        System.out.println(inputValue.substring(1, inputValue.length()));
-
-        Character e = inputValue.charAt(0);
-        System.out.println(e);
-        String s = e.toString();
-        System.out.println(s.equals("?") +" "+ s.equals("-"));
-
-       return Long.parseLong(inputValue);
+        if (inputValue.charAt(0) == 8722) {
+            return -1 * Long.parseLong(inputValue.substring(1, inputValue.length()));
+        } else if(inputValue.charAt(0) == 43) {
+            return Long.parseLong(inputValue);
+        } else {
+            return 0;
+        }
     }
 }

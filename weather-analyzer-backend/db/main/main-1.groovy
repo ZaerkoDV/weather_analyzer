@@ -54,11 +54,11 @@ databaseChangeLog(logicalFilePath: 'main-1') {
             }
 
             column name: 'web_site_forecast_temperature', type: 'bigint', {
-                constraints nullable: false
+                constraints nullable: true
             }
 			
 			column name: 'web_site_real_temperature', type: 'bigint', {
-                constraints nullable: false
+                constraints nullable: true
             }
 
             column name: 'error_temperature', type: 'bigint', {
@@ -66,7 +66,7 @@ databaseChangeLog(logicalFilePath: 'main-1') {
             }
 
             column name: 'error_sign', type: 'bigint', {
-                constraints nullable: false
+                constraints nullable: true
             }
 
             column name: 'weather_web_site_id', type: 'bigint', {
@@ -128,11 +128,11 @@ databaseChangeLog(logicalFilePath: 'main-1') {
             }
 
             column name: 'forecast_temperature', type: 'bigint', {
-                constraints nullable: false
+                constraints nullable: true
             }
 
             column name: 'real_temperature', type: 'bigint', {
-                constraints nullable: false
+                constraints nullable: true
             }
 
             column name: 'weather_web_site_id', type: 'bigint', {

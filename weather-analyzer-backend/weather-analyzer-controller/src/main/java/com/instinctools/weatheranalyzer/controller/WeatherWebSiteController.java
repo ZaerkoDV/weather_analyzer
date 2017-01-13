@@ -28,12 +28,9 @@ public class WeatherWebSiteController extends BaseController {
     public ResponseEntity<?> actionPostScreenParsingStart(@RequestParam("site") String site) {
         WeatherWebSite weatherWebSite = weatherWebSiteServiñe.getByName(site);
 
-        return buildValidationResult(weatherDataService.createWeatherData(new WeatherData()
+        return buildOk(weatherDataService.createWeatherData(new WeatherData()
             .setCreatedAtTimestamp(getCurrentTimestamp())
             .setWeatherWebSite(weatherWebSite)
-        ), weatherDataTemp -> toMap(
-            "id", weatherDataTemp.getId(),
-            "site", weatherDataTemp.getWeatherWebSite().getName()
         ));
     }
 

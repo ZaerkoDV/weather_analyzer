@@ -1,16 +1,11 @@
 package com.instinctools.weatheranalyzer.service.impl;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.instinctools.weatheranalyzer.dao.WeatherDataDao;
 import com.instinctools.weatheranalyzer.model.WeatherData;
 import com.instinctools.weatheranalyzer.screenparser.gismeteo.GismeteoParser;
@@ -47,36 +42,52 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
     }
 
     @Override
-    public ValidationResult<WeatherData> createWeatherData(WeatherData inputWeatherData) {
-       ValidationResult<WeatherData> result = validate(inputWeatherData, new ValidationResult<WeatherData>());
+    public ValidationResult<Boolean> createWeatherData(WeatherData inputWeatherData) {
+       ValidationResult<Boolean> result = validate(inputWeatherData, new ValidationResult<Boolean>());
 
        if (result.isFaulted()) {
            return result;
        }
 
-       List<Long> middleDayTemprageForWeek;
-
        if (inputWeatherData.getWeatherWebSite().getName().equals("gismeteo.by")) {
-           middleDayTemprageForWeek = gismeteoParser.startParsing(MAP_WEB_SITE_ADDRESES.get(
-               inputWeatherData.getWeatherWebSite().getName()
-           ));
-       } else {
-           middleDayTemprageForWeek = Collections.EMPTY_LIST;
+           return result.setResult(
+               startGismeteoParsing(inputWeatherData)
+           );
        }
 
-//       if (inputWeatherData.getWeatherWebSite().getName() == "tut.by") {
-//           tutByParser
-//       }
-//
-//       if (inputWeatherData.getWeatherWebSite().getName() == "pogoda.blr.cc") {
-//          pogodablrParser
-//       }
-       return result.setResult(null);//weatherDataDao.save(inputWeatherData));
+       if (inputWeatherData.getWeatherWebSite().getName().equals("tut.by")) {
+       }
+
+       if (inputWeatherData.getWeatherWebSite().getName().equals("pogoda.blr.cc")) {
+       }
+
+       return result.setResult(Boolean.FALSE);
     }
 
+    public Boolean startGismeteoParsing(WeatherData inputWeatherData) {
+        List<Long> middleDayTemprageForWeek = gismeteoParser.startParsing(MAP_WEB_SITE_ADDRESES.get(
+            inputWeatherData.getWeatherWebSite().getName()
+        ));
 
+        for (int i=0; i < middleDayTemprageForWeek.size(); i++) {
+            weatherDataDao.save(new WeatherData()
+                .setCreatedAtTimestamp(inputWeatherData.getCreatedAtTimestamp() + (i*(long)86400000))
+                .setWebSiteForecastTemperature(middleDayTemprageForWeek.get(i))
+                .setWeatherWebSite(inputWeatherData.getWeatherWebSite())
+            );
+            weatherDataDao.flush();
+        }
 
+        return Boolean.TRUE;
+    }
 
+    public Boolean startTuyByParsing(WeatherData inputWeatherData) {
+        return Boolean.TRUE;
+    }
+
+    public Boolean pogodaBlrParsing(WeatherData inputWeatherData) {
+        return Boolean.TRUE;
+    }
 
     public <T> ValidationResult<T> validate(WeatherData inputWeatherData, ValidationResult<T> result) {
         Boolean webAddressExist = MAP_WEB_SITE_ADDRESES.containsKey(inputWeatherData.getWeatherWebSite().getName());
