@@ -24,14 +24,14 @@ public class TutByParser {//http://pogoda.tut.by/city/grodno/
 
         Element firstElenent = doc.select("span.temp-i").get(0);
         middleDayTemprageForWeek.add(
-            minusCorrector(firstElenent.text())
+            correctorDigitFormat(firstElenent.text())
         );
 
         Elements elements = doc.select("div.bs-temp");
 
         for (Element element : elements) {
             middleDayTemprageForWeek.add(
-                minusCorrector(element.select("span.bs-max").text())
+                correctorDigitFormat(element.select("span.bs-max").text())
             );
         }
 
@@ -39,7 +39,7 @@ public class TutByParser {//http://pogoda.tut.by/city/grodno/
     }
 
     //8722 - minus  43- plus
-    public long minusCorrector(String inputValue) {
+    public long correctorDigitFormat(String inputValue) {
         if (inputValue.charAt(0) == '-') {
             return -1 * Long.parseLong(inputValue.substring(1, inputValue.length()-1));
         } else if (inputValue.charAt(0) == '+') {

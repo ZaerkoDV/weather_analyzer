@@ -39,7 +39,7 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
 
         MAP_WEB_SITE_ADDRESES.put("gismeteo.by", "https://www.gismeteo.by/weather-grodno-4243/weekly/");
         MAP_WEB_SITE_ADDRESES.put("tut.by", "http://pogoda.tut.by/city/grodno/");
-        MAP_WEB_SITE_ADDRESES.put("pogoda.blr.cc", "http://pogoda.blr.cc/belarus/soligorsk/7-dney/");
+        MAP_WEB_SITE_ADDRESES.put("pogoda.blr.cc", "http://pogoda.blr.cc/belarus/grodno/7-dney/");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
            middleDayTemprageForWeek = gismeteoParser.startParsing(MAP_WEB_SITE_ADDRESES.get(name));
 
            return result.setResult(
-               startGismeteoParsing(inputWeatherData, middleDayTemprageForWeek)
+               startParsing(inputWeatherData, middleDayTemprageForWeek)
            );
        }
 
@@ -65,20 +65,28 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
            middleDayTemprageForWeek = tutByParser.startParsing(MAP_WEB_SITE_ADDRESES.get(name));
 
            return result.setResult(
-                startGismeteoParsing(inputWeatherData, middleDayTemprageForWeek)
+                startParsing(inputWeatherData, middleDayTemprageForWeek)
            );
        }
 
        if (inputWeatherData.getWeatherWebSite().getName().equals("pogoda.blr.cc")) {
+           middleDayTemprageForWeek = pogodablrParser.startParsing(MAP_WEB_SITE_ADDRESES.get(name));
+
+           return result.setResult(
+                startParsing(inputWeatherData, middleDayTemprageForWeek)
+           );
        }
 
        return result.setResult(Boolean.FALSE);
     }
 
     // middleDayTemprageForWeek.get(0) = today
-    public Boolean startGismeteoParsing(WeatherData inputWeatherData, List<Long> middleDayTemprageForWeek) {
+    public Boolean startParsing(WeatherData inputWeatherData, List<Long> middleDayTemprageForWeek) {
         // save real temperature on current day
-        WeatherData prevoriusWeatherData =  weatherDataDao.findForecastTempratureOnDay(inputWeatherData);//1484309568324
+        WeatherData prevoriusWeatherData =  weatherDataDao.findForecastTempratureOnDay(
+            inputWeatherData.getCreatedAtTimestamp(),
+            inputWeatherData.getWeatherWebSite().getName()
+        );
 
         prevoriusWeatherData.setWebSiteRealTemperature(
             middleDayTemprageForWeek.get(0)
@@ -91,27 +99,16 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
         ));
         weatherDataDao.save(prevoriusWeatherData);
 
-     // save forecast temperature on next 6 day
-        WeatherData savedDate;
+        // save forecast temperature on next 6 day
         for (int i=1; i < middleDayTemprageForWeek.size(); i++) {
-            savedDate = weatherDataDao.findForecastTempratureOnDay(new WeatherData()
-                .setCreatedAtTimestamp(inputWeatherData.getCreatedAtTimestamp() + (i*(long)86400000))
-                .setWeatherWebSite(new WeatherWebSite().setName(
-                     inputWeatherData.getWeatherWebSite().getName()
-                ))
+            WeatherData weatherData = weatherDataDao.findForecastTempratureOnDay(
+                inputWeatherData.getCreatedAtTimestamp() + (i * (long)86400000),
+                inputWeatherData.getWeatherWebSite().getName()
             );
 
-            // if date exist yet
-            if (savedDate.getId() != null) {
-                weatherDataDao.save(savedDate
-                    .setWebSiteForecastTemperature(middleDayTemprageForWeek.get(i))
-                );
-                weatherDataDao.flush();
-
-            // if date not exist
-            } else {
+            if (weatherData == null) {
                 weatherDataDao.save(new WeatherData()
-                    .setCreatedAtTimestamp(inputWeatherData.getCreatedAtTimestamp() + (i*(long)86400000))
+                    .setCreatedAtTimestamp(inputWeatherData.getCreatedAtTimestamp() + (i * (long)86400000))
                     .setWebSiteForecastTemperature(middleDayTemprageForWeek.get(i))
                     .setWeatherWebSite(inputWeatherData.getWeatherWebSite())
                 );
@@ -121,11 +118,6 @@ public class WeatherDataServiceImpl extends BaseService implements WeatherDataSe
 
         return Boolean.TRUE;
     }
-
-    public Boolean pogodaBlrParsing(WeatherData inputWeatherData) {
-        return Boolean.TRUE;
-    }
-
 
     public Long countDistance(Long forecastTempratureCourrentDay, Long realTempratureCurrentDay) {
        return Math.abs(Math.abs(forecastTempratureCourrentDay)-Math.abs(realTempratureCurrentDay));
