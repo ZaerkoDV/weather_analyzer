@@ -11,7 +11,7 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
         insert tableName: 'weather_web_site', {
             column name: 'id', value: 2
             column name: 'name', value: 'tut.by'
-            column name: 'full_url', value: 'http://pogoda.tut.by/'
+            column name: 'full_url', value: 'http://pogoda.tut.by/city/grodno/'
             column name: 'last_success_connected', value: 1468330053
             column name: 'reating_position', value: 2
         }
@@ -19,7 +19,7 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
         insert tableName: 'weather_web_site', {
             column name: 'id', value: 3
             column name: 'name', value: 'pogoda.blr.cc'
-            column name: 'full_url', value: 'http://pogoda.blr.cc/belarus/soligorsk/7-dney/'
+            column name: 'full_url', value: 'http://pogoda.blr.cc/belarus/grodno/7-dney/'
             column name: 'last_success_connected', value: 1468330053
             column name: 'reating_position', value: 3
         }

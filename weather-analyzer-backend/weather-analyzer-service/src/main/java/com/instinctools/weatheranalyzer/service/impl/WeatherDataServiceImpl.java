@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.instinctools.weatheranalyzer.dao.WeatherDataDao;
 import com.instinctools.weatheranalyzer.model.WeatherData;
-import com.instinctools.weatheranalyzer.model.WeatherWebSite;
 import com.instinctools.weatheranalyzer.screenparser.gismeteo.GismeteoParser;
 import com.instinctools.weatheranalyzer.screenparser.pogodablr.PogodablrParser;
 import com.instinctools.weatheranalyzer.screenparser.tutby.TutByParser;
@@ -20,7 +19,7 @@ import com.instinctools.weatheranalyzer.service.support.ValidationResult;
 @Transactional
 public class WeatherDataServiceImpl extends BaseService implements WeatherDataService {
     private static final Map<String, String> MAP_WEB_SITE_ADDRESES;
-    private static final String ERROR_WEB_ADDRESS = "birthRequired";
+    private static final String ERROR_WEB_ADDRESS = "webAddressRequired";
 
     @Autowired
     public WeatherDataDao weatherDataDao;
